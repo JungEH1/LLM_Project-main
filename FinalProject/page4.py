@@ -3,28 +3,28 @@ from langchain_core.prompts import PromptTemplate
 
 from MyLCH import getOpenAI
 
-st.set_page_config(page_title="주제 설명기", layout="wide")
-st.markdown("# 주제 설명기 — 어떤 주제든 연구/설명합니다")
-st.sidebar.markdown("간단한 주제 입력으로 체계적 설명과 학습 플랜을 생성합니다.")
+st.markdown("# 주제 설명문 보기")
+st.sidebar.markdown("주제를 정하면 설명문을 작성하여 보여줍니다. 주제에 대해 정확히 알아가는 데 도움이 될 수 있습니다.")
 
 # 입력 영역
 input_text = st.text_area(label="주제 입력", label_visibility='visible',
                           placeholder="설명할 주제를 입력하세요 (예: 양자 컴퓨팅의 기본 개념)", key="input_text")
 
 # 옵션
-col1, col2, col3 = st.columns(3)
+# 옵션
+col1, col2 = st.columns([1,2])   # 왼쪽(설명 수준), 오른쪽(체크박스 영역)
+
 with col1:
     depth = st.selectbox("설명 수준", ["간단", "중간", "상세"], index=1)
-with col2:
-    include_outline = st.checkbox("목차(아웃라인) 포함", value=True)
-with col3:
-    include_examples = st.checkbox("실용적 예시 포함", value=True)
 
-col4, col5 = st.columns([1,1])
-with col4:
-    include_refs = st.checkbox("참고문헌/검색 쿼리 제안 포함", value=True)
-with col5:
-    include_next_steps = st.checkbox("다음 학습/연구 단계 제안", value=True)
+with col2:
+    c1, c2 = st.columns(2)
+    with c1:
+        include_outline = st.checkbox("목차(아웃라인) 포함", value=True)
+        include_refs = st.checkbox("참고문헌/검색 쿼리 제안 포함", value=True)
+    with c2:
+        include_examples = st.checkbox("실용적 예시 포함", value=True)
+        include_next_steps = st.checkbox("다음 학습/연구 단계 제안", value=True)
 
 
 st.markdown("---")
@@ -108,7 +108,3 @@ if st.session_state.get('last_response'):
             st.error(f"체크리스트 생성 중 오류: {e}")
 else:
     st.info("주제와 옵션을 입력한 뒤 '설명 생성' 버튼을 누르세요.")
-
-# 사이드바 도움말
-st.sidebar.markdown('---')
-st.sidebar.info('주제를 입력하면 AI가 연구자/강사처럼 체계적으로 설명을 생성합니다. 필요하면 출력 형식을 조정하세요.')

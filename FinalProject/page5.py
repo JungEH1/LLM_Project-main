@@ -4,7 +4,6 @@ from langchain.memory import ConversationBufferMemory
 from streamlit_chat import message
 from MyLCH import getOpenAI  # 사용자의 LLM 래퍼
 
-st.set_page_config(page_title="채팅 - 모드 지원", layout="wide")
 st.markdown("# 채팅하기")
 st.sidebar.markdown("학습한 내용을 주제로 토론/토의하며 지식을 확장해요")
 
